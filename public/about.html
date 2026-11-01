@@ -3,40 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us - Aman Pharma v1.4</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+  <title>About us — Aman Pharma v1.4</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="images/mark.png">
 </head>
 <body>
-  <div class="top-bar">
-    <div class="container">
-      <span>Call us: +91 98765 43210 | info@amanpharma.com</span>
-      <div><a href="/auth">Login</a><a href="/store">Shop Now</a></div>
-    </div>
-  </div>
-  <nav class="navbar">
-    <div class="container">
-      <a href="/" class="logo">
-        <div class="logo-icon"><img src="/images/logo.jpg" alt="Aman Pharma"></div>
-        <div class="logo-text"><h1>Aman Pharma</h1><span>v1.4 HEALTHCARE</span></div>
+  <header class="site-header" id="siteHeader">
+    <div class="nav-shell">
+      <a href="index.html" class="brand">
+        <span class="logo-icon"><img src="images/mark.png" alt="Aman Pharma"></span>
+        <span class="brand-text">Aman Pharma<em>v1.4 Healthcare</em></span>
       </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="/">Home</a></li>
-        <li><a href="/about" class="active">About</a></li>
-        <li><a href="/products">Products</a></li>
-        <li><a href="/store">Store</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/cart" class="nav-btn">Cart (<span id="cartCount">0</span>)</a></li>
-        <li><a href="/auth" class="nav-btn" id="authNav">Login</a></li>
-      </ul>
-      <div class="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></div>
+      <nav class="nav-pill" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html" class="active">About</a>
+        <a href="products.html">Products</a>
+        <a href="store.html">Store</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-cart">Cart <span class="cart-count" id="cartCount">0</span></a>
+        <a href="auth.html" class="nav-login" id="authNav">Login</a>
+        <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu"><span></span><span></span></button>
+      </div>
     </div>
-  </nav>
+  </header>
 
-  <section class="about-hero">
+  <section class="page-hero mesh">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="container">
-      <h2>About Aman Pharma</h2>
-      <p>15+ years of dedication to India's healthcare landscape</p>
+      <span class="eyebrow">Since 2010</span>
+      <h1>Fifteen years of care in every order</h1>
+      <p>We started as a single pharmacy in Addis Ababa. Today we supply quality medicines to more than 50,000 people across 200+ cities in Ethiopia.</p>
     </div>
   </section>
 
@@ -44,28 +42,29 @@
     <div class="container">
       <div class="about-full-grid">
         <div>
-          <div class="tag" style="display:inline-block;background:rgba(45,106,79,0.1);color:var(--green);padding:6px 16px;border-radius:20px;font-size:0.85rem;font-weight:500;margin-bottom:15px">Our Story</div>
-          <h2 style="font-size:2.3rem;color:var(--brown-dark);margin-bottom:20px">Building Trust Since 2010</h2>
-          <p style="color:var(--text-muted);margin-bottom:15px">Aman Pharma was founded with a simple vision: make quality healthcare accessible and affordable for every Indian. What started as a small pharmacy in Mumbai has grown into a nationally recognized pharmaceutical brand.</p>
-          <p style="color:var(--text-muted);margin-bottom:15px">Our state-of-the-art manufacturing facility spans 50,000 sq ft and is equipped with the latest technology. Every product goes through rigorous quality checks before reaching our customers.</p>
-          <p style="color:var(--text-muted);margin-bottom:15px">With a team of 200+ pharmaceutical experts, doctors, and support staff, we serve over 50,000 customers across 200+ cities in India.</p>
+          <div class="tag">Our story</div>
+          <h2 style="font-size: clamp(1.9rem, 3vw, 2.6rem); font-weight: 300; letter-spacing: -0.03em; margin-bottom: 18px;">Building trust since 2010</h2>
+          <p style="color: var(--muted); margin-bottom: 14px;">Aman Pharma was founded with a simple vision: make quality healthcare accessible and affordable for every Ethiopian. What started as a small pharmacy in Addis Ababa has grown into a nationally recognised pharmaceutical brand.</p>
+          <p style="color: var(--muted); margin-bottom: 14px;">Our state-of-the-art manufacturing facility spans 50,000 sq ft and is equipped with the latest technology. Every product goes through rigorous quality checks before reaching our customers.</p>
+          <p style="color: var(--muted); margin-bottom: 14px;">With a team of 200+ pharmaceutical experts, doctors and support staff, we serve over 50,000 customers across 200+ cities in Ethiopia.</p>
         </div>
         <div class="about-image">
           <div class="about-image-text">
             <div class="big-number">15+</div>
-            <p>Years of Excellence</p>
+            <p>Years of excellence</p>
           </div>
         </div>
       </div>
 
-      <div style="margin-top:80px">
+      <div style="margin-top: 100px;">
         <div class="section-header">
-          <div class="tag">Our Values</div>
-          <h2>What Drives Us</h2>
+          <div class="tag">Our values</div>
+          <h2>What drives us</h2>
+          <p>Six principles behind every tablet, bottle and delivery we send out.</p>
         </div>
         <div class="values-grid">
-          <div class="value-card"><h4>Quality First</h4><p>Every product meets WHO-GMP standards. We never compromise on quality.</p></div>
-          <div class="value-card"><h4>Customer Care</h4><p>24/7 support to ensure your health needs are always met promptly.</p></div>
+          <div class="value-card"><h4>Quality first</h4><p>Every product meets WHO-GMP standards. We never compromise on quality.</p></div>
+          <div class="value-card"><h4>Customer care</h4><p>24/7 support to ensure your health needs are always met promptly.</p></div>
           <div class="value-card"><h4>Innovation</h4><p>Continuously improving our products and services for better health outcomes.</p></div>
           <div class="value-card"><h4>Affordability</h4><p>Premium healthcare shouldn't break the bank. We keep prices fair.</p></div>
           <div class="value-card"><h4>Integrity</h4><p>Transparent business practices and honest communication with all stakeholders.</p></div>
@@ -73,18 +72,19 @@
         </div>
       </div>
 
-      <div style="margin-top:80px">
+      <div style="margin-top: 100px;">
         <div class="section-header">
-          <div class="tag">Our Journey</div>
+          <div class="tag">Our journey</div>
           <h2>Milestones</h2>
+          <p>From one counter in Bole to a nationwide distribution network.</p>
         </div>
         <div class="timeline">
-          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2010</div><h4>Foundation</h4><p>Aman Pharma established in Mumbai with a vision for affordable healthcare.</p></div></div>
-          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2013</div><h4>WHO-GMP Certification</h4><p>Achieved WHO-GMP certification for our manufacturing facility.</p></div></div>
-          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2016</div><h4>National Expansion</h4><p>Expanded distribution to 100+ cities across India.</p></div></div>
-          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2019</div><h4>Online Store Launch</h4><p>Launched e-commerce platform for direct-to-consumer sales.</p></div></div>
-          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2023</div><h4>50K Customers</h4><p>Reached the milestone of serving 50,000+ happy customers.</p></div></div>
-          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2026</div><h4>v1.4 Launch</h4><p>Released Aman Pharma v1.4 with enhanced features and store.</p></div></div>
+          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2010</div><h4>Foundation</h4><p>Aman Pharma established in Addis Ababa with a vision for affordable healthcare.</p></div></div>
+          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2013</div><h4>WHO-GMP certification</h4><p>Achieved WHO-GMP certification for our manufacturing facility.</p></div></div>
+          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2016</div><h4>National expansion</h4><p>Expanded distribution to 100+ cities across Ethiopia.</p></div></div>
+          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2019</div><h4>Online store launch</h4><p>Launched our e-commerce platform for direct-to-consumer sales.</p></div></div>
+          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2023</div><h4>50K customers</h4><p>Reached the milestone of serving 50,000+ happy customers.</p></div></div>
+          <div class="timeline-item"><div class="timeline-content"><div class="timeline-year">2026</div><h4>v1.4 launch</h4><p>Released Aman Pharma v1.4 with enhanced features and store.</p></div></div>
         </div>
       </div>
     </div>
@@ -92,8 +92,8 @@
 
   <section class="newsletter">
     <div class="container">
-      <h3>Stay Updated</h3>
-      <p>Subscribe for health tips and exclusive offers</p>
+      <h3>Stay updated</h3>
+      <p>Subscribe for health tips and exclusive offers.</p>
       <form class="newsletter-form" id="newsletterForm">
         <input type="email" placeholder="Enter your email" required>
         <button type="submit">Subscribe</button>
@@ -105,16 +105,47 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-about"><a href="/" class="logo"><div class="logo-icon"><img src="/images/logo.jpg" alt="Aman Pharma"></div><div class="logo-text"><h1 style="color:#fff">Aman Pharma</h1><span>v1.4 HEALTHCARE</span></div></a><p>Your trusted pharmaceutical partner since 2010.</p></div>
-        <div><h4>Quick Links</h4><ul class="footer-links"><li><a href="/">Home</a></li><li><a href="/about">About</a></li><li><a href="/products">Products</a></li><li><a href="/store">Store</a></li><li><a href="/contact">Contact</a></li></ul></div>
-        <div><h4>Categories</h4><ul class="footer-links"><li><a href="/store?category=antibiotics">Antibiotics</a></li><li><a href="/store?category=pain-relief">Pain Relief</a></li><li><a href="/store?category=supplements">Supplements</a></li><li><a href="/store?category=diabetes">Diabetes</a></li></ul></div>
-        <div class="footer-contact"><h4>Contact</h4><p>📍 123 Pharma Hub, Mumbai</p><p>📞 +91 98765 43210</p><p>✉️ info@amanpharma.com</p></div>
+        <div class="footer-about">
+          <a href="index.html" class="logo">
+            <span class="logo-icon"><img src="images/mark.png" alt="Aman Pharma"></span>
+            <span class="brand-text">Aman Pharma<em>v1.4 Healthcare</em></span>
+          </a>
+          <p>Your trusted pharmaceutical partner since 2010.</p>
+        </div>
+        <div>
+          <h4>Quick links</h4>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="store.html">Store</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Categories</h4>
+          <ul class="footer-links">
+            <li><a href="store.html?category=antibiotics">Antibiotics</a></li>
+            <li><a href="store.html?category=pain-relief">Pain relief</a></li>
+            <li><a href="store.html?category=supplements">Supplements</a></li>
+            <li><a href="store.html?category=diabetes">Diabetes</a></li>
+          </ul>
+        </div>
+        <div class="footer-contact">
+          <h4>Contact</h4>
+          <p>Bole Road Pharma Hub, Addis Ababa</p>
+          <p>+251 91 234 5678</p>
+          <p>info@amanpharma.com</p>
+        </div>
       </div>
-      <div class="footer-bottom"><p>&copy; 2026 Aman Pharma v1.4. All rights reserved.</p><div class="footer-social"><a href="#">f</a><a href="#">tw</a><a href="#">in</a></div></div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Aman Pharma v1.4. All rights reserved.</p>
+        <div class="footer-social"><a href="#">f</a><a href="#">tw</a><a href="#">in</a></div>
+      </div>
     </div>
   </footer>
   <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
-  <script src="/js/app.js"></script>
+  <script src="js/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => { updateNavAuth(); updateCartCount(); });
     document.getElementById('newsletterForm').addEventListener('submit', async e => { e.preventDefault(); const email = e.target.querySelector('input').value; const r = await fetch('/api/newsletter',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email})}); if(r.ok){document.getElementById('newsletterSuccess').style.display='block';e.target.reset();setTimeout(()=>document.getElementById('newsletterSuccess').style.display='none',3000);} });

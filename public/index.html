@@ -3,73 +3,98 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aman Pharma v1.4 - Premium Pharmaceutical Healthcare</title>
-  <link rel="stylesheet" href="/css/style.css">
-  <link rel="icon" type="image/jpeg" href="/images/logo.jpg">
+  <title>Aman Pharma v1.4 — Your Health, Our Priority</title>
+  <meta name="description" content="Aman Pharma — WHO-GMP certified medicines, supplements and healthcare essentials delivered across Ethiopia.">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" type="image/png" href="images/mark.png">
 </head>
 <body>
-  <div class="top-bar">
-    <div class="container">
-      <span>Call us: +91 98765 43210 | info@amanpharma.com</span>
-      <div>
-        <a href="/auth">Login</a>
-        <a href="/store">Shop Now</a>
-      </div>
-    </div>
-  </div>
-
-  <nav class="navbar">
-    <div class="container">
-      <a href="/" class="logo">
-        <div class="logo-icon"><img src="/images/logo.jpg" alt="Aman Pharma"></div>
-        <div class="logo-text">
-          <h1>Aman Pharma</h1>
-          <span>v1.4 HEALTHCARE</span>
-        </div>
+  <header class="site-header" id="siteHeader">
+    <div class="nav-shell">
+      <a href="index.html" class="brand">
+        <span class="logo-icon"><img src="images/mark.png" alt="Aman Pharma"></span>
+        <span class="brand-text">Aman Pharma<em>v1.4 Healthcare</em></span>
       </a>
-      <ul class="nav-links" id="navLinks">
-        <li><a href="/" class="active">Home</a></li>
-        <li><a href="/about">About</a></li>
-        <li><a href="/products">Products</a></li>
-        <li><a href="/store">Store</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/cart" class="nav-btn">Cart (<span id="cartCount">0</span>)</a></li>
-        <li><a href="/auth" class="nav-btn" id="authNav">Login</a></li>
-      </ul>
-      <div class="hamburger" onclick="toggleNav()">
-        <span></span><span></span><span></span>
+      <nav class="nav-pill" id="navLinks">
+        <a href="index.html" class="active">Home</a>
+        <a href="about.html">About</a>
+        <a href="products.html">Products</a>
+        <a href="store.html">Store</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="cart.html" class="nav-cart">Cart <span class="cart-count" id="cartCount">0</span></a>
+        <a href="auth.html" class="nav-login" id="authNav">Login</a>
+        <button class="nav-toggle" onclick="toggleNav()" aria-label="Menu"><span></span><span></span></button>
       </div>
     </div>
-  </nav>
+  </header>
 
-  <section class="hero">
-    <div class="container">
-      <div class="hero-content">
-        <div class="hero-badge">India's Trusted Pharmaceutical Brand</div>
-        <h2>Your Health, <span>Our Priority</span></h2>
-        <p>Aman Pharma v1.4 brings you premium quality medicines, supplements, and healthcare products. Trusted by 50,000+ customers across India with WHO-GMP certified manufacturing.</p>
-        <div class="hero-buttons">
-          <a href="/store" class="btn-primary">Explore Store</a>
-          <a href="/about" class="btn-secondary">Learn More</a>
+  <section class="hero mesh">
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="container hero-inner">
+      <div class="hero-copy">
+        <span class="eyebrow">Ethiopia's trusted pharmaceutical brand</span>
+        <h1>Your Health,<br><span>Our Priority.</span></h1>
+        <p class="lede">Premium quality medicines, supplements and everyday healthcare essentials — made in WHO-GMP certified facilities and delivered to your door by licensed pharmacists.</p>
+        <div class="hero-actions">
+          <a href="store.html" class="btn-light">Explore store
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="about.html" class="btn-ghost">Learn more
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </div>
         <div class="hero-stats">
-          <div class="stat">
-            <h3>50K+</h3>
-            <p>Happy Customers</p>
-          </div>
-          <div class="stat">
-            <h3>500+</h3>
-            <p>Products</p>
-          </div>
-          <div class="stat">
-            <h3>15+</h3>
-            <p>Years Experience</p>
-          </div>
-          <div class="stat">
-            <h3>200+</h3>
-            <p>Cities Served</p>
+          <div class="stat"><h3>50K+</h3><p>Happy customers</p></div>
+          <div class="stat"><h3>500+</h3><p>Products</p></div>
+          <div class="stat"><h3>15+</h3><p>Years experience</p></div>
+          <div class="stat"><h3>200+</h3><p>Cities served</p></div>
+        </div>
+      </div>
+
+      <aside class="hero-panel" aria-label="Delivery and dispensing schedule">
+        <div class="panel-top"><span class="panel-dot"></span> Dispensing near you</div>
+        <div class="panel-loc">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+          Bole Road Pharma Hub, Addis Ababa
+        </div>
+        <div class="slot">
+          <div class="slot-head"><strong>Today</strong><span class="pill-mini">2 slots left</span></div>
+          <div class="slot-time">
+            <span><small>From</small>10:00 AM</span>
+            <span class="arrow">→</span>
+            <span><small>To</small>2:00 PM</span>
           </div>
         </div>
+        <div class="slot">
+          <div class="slot-head"><strong>Tomorrow</strong><span class="pill-mini">Same-day</span></div>
+          <div class="slot-time">
+            <span><small>From</small>9:00 AM</span>
+            <span class="arrow">→</span>
+            <span><small>To</small>1:00 PM</span>
+          </div>
+        </div>
+        <div class="slot-foot">Order before 2 PM for same-day dispatch.</div>
+      </aside>
+    </div>
+
+    <div class="container hero-strip">
+      <div class="strip-item">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+        <span><strong>WHO-GMP certified</strong>Every batch lab tested</span>
+      </div>
+      <div class="strip-item">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L4 14h6l-1 8 9-12h-6l1-8z"/></svg>
+        <span><strong>Same-day dispatch</strong>On orders before 2 PM</span>
+      </div>
+      <div class="strip-item">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.4"/></svg>
+        <span><strong>200+ cities</strong>Pan-Ethiopia delivery</span>
+      </div>
+      <div class="strip-item">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-4.4-7-9.2A4 4 0 0 1 12 9a4 4 0 0 1 7 2.8C19 16.6 12 21 12 21z"/></svg>
+        <span><strong>Pharmacist advice</strong>Free with every order</span>
       </div>
     </div>
   </section>
@@ -77,40 +102,52 @@
   <section class="section features">
     <div class="container">
       <div class="section-header">
-        <div class="tag">Why Choose Us</div>
-        <h2>Healthcare Excellence</h2>
-        <p>We deliver quality medicines with care, certified standards, and unmatched service</p>
+        <div class="tag">Why choose us</div>
+        <h2>Healthcare, held to a higher standard</h2>
+        <p>Quality medicines, certified manufacturing and service that treats you like a person — not an order number.</p>
       </div>
       <div class="features-grid">
         <div class="feature-card">
-          <div class="feature-icon green">🏥</div>
-          <h3>WHO-GMP Certified</h3>
-          <p>All products manufactured in WHO-GMP certified facilities ensuring highest quality standards.</p>
+          <div class="feature-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4.2-2.9 7.6-7 9-4.1-1.4-7-4.8-7-9V6l7-3z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
+          <h3>WHO-GMP certified</h3>
+          <p>All products are manufactured in WHO-GMP certified facilities, with every batch verified before it reaches you.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon gold">🚚</div>
-          <h3>Fast Delivery</h3>
-          <p>Free delivery on orders above Rs.500. Same-day dispatch for orders placed before 2 PM.</p>
+          <div class="feature-icon gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7h11v9H3z"/><path d="M14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17.5" cy="18" r="1.6"/></svg>
+          </div>
+          <h3>Fast delivery</h3>
+          <p>Free delivery above Br 500, with same-day dispatch for orders placed before 2 PM.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon brown">🔒</div>
-          <h3>Secure Shopping</h3>
-          <p>100% secure payments with SSL encryption. Your data is always protected with us.</p>
+          <div class="feature-icon brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10" width="14" height="10" rx="2.5"/><path d="M8 10V7.5a4 4 0 0 1 8 0V10"/><path d="M12 14v2"/></svg>
+          </div>
+          <h3>Secure shopping</h3>
+          <p>100% secure payments with SSL encryption. Your prescriptions and personal data stay protected.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon green">👨‍⚕️</div>
-          <h3>Expert Consultation</h3>
-          <p>Free pharmacist consultation with every order. Get expert advice on your health.</p>
+          <div class="feature-icon green">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h3l2-5 3 10 2.5-5H21"/></svg>
+          </div>
+          <h3>Expert consultation</h3>
+          <p>Free pharmacist consultation with every order — real advice on dosage, timing and interactions.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon gold">💰</div>
-          <h3>Best Prices</h3>
-          <p>Competitive pricing with regular discounts. Save up to 30% on MRP on all products.</p>
+          <div class="feature-icon gold">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 18L18 6"/><circle cx="7.5" cy="7.5" r="2.2"/><circle cx="16.5" cy="16.5" r="2.2"/></svg>
+          </div>
+          <h3>Best prices</h3>
+          <p>Competitive pricing with regular discounts — save up to 30% off MRP across the catalogue.</p>
         </div>
         <div class="feature-card">
-          <div class="feature-icon brown">📱</div>
-          <h3>Easy Returns</h3>
-          <p>Hassle-free return policy within 7 days. Full refund guaranteed on defective products.</p>
+          <div class="feature-icon brown">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8v5h5"/><path d="M4.5 12.5A8 8 0 1 0 6 6.4"/></svg>
+          </div>
+          <h3>Easy returns</h3>
+          <p>Hassle-free returns within 7 days and a full refund on any defective product.</p>
         </div>
       </div>
     </div>
@@ -122,45 +159,58 @@
         <div class="about-image">
           <div class="about-image-text">
             <div class="big-number">15+</div>
-            <p>Years of Trusted Service</p>
+            <p>Years of trusted service</p>
           </div>
         </div>
         <div class="about-content">
           <div class="tag">About Aman Pharma</div>
-          <h2>Dedicated to Your Well-being</h2>
-          <p>Founded in 2010, Aman Pharma has grown from a small pharmacy to one of India's most trusted pharmaceutical brands. Our commitment to quality and customer satisfaction drives everything we do.</p>
-          <p>We specialize in manufacturing and distributing a wide range of pharmaceutical products including antibiotics, supplements, pain relief, diabetes care, and cardiovascular medications.</p>
+          <h2>Dedicated to your well-being</h2>
+          <p>Founded in 2010, Aman Pharma has grown from a small pharmacy into one of Ethiopia's most trusted pharmaceutical brands. Our commitment to quality and customer care drives everything we do.</p>
+          <p>We manufacture and distribute a wide range of products — antibiotics, supplements, pain relief, diabetes care and cardiovascular medicines.</p>
           <ul class="about-list">
-            <li>WHO-GMP & ISO 9001:2015 Certified</li>
-            <li>500+ Products across 12 categories</li>
+            <li>WHO-GMP &amp; ISO 9001:2015 certified</li>
+            <li>500+ products across 12 categories</li>
             <li>Distribution network across 200+ cities</li>
             <li>24/7 customer support</li>
           </ul>
-          <a href="/about" class="btn-primary">Read More</a>
+          <a href="about.html" class="btn-primary">Read more
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="section" style="background: var(--off-white);">
+  <section class="section" style="background: var(--paper);">
     <div class="container">
       <div class="section-header">
-        <div class="tag">Featured Products</div>
-        <h2>Popular Medicines</h2>
-        <p>Our best-selling pharmaceutical products trusted by doctors and patients</p>
+        <div class="tag">Featured products</div>
+        <h2>Popular medicines</h2>
+        <p>Our best-selling products, trusted by doctors and patients across Ethiopia.</p>
       </div>
       <div class="products-grid" id="featuredProducts"></div>
-      <div style="text-align:center; margin-top:40px;">
-        <a href="/store" class="btn-primary">View All Products</a>
+      <div style="text-align:center; margin-top:44px;">
+        <a href="store.html" class="btn-primary">View all products
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
       </div>
     </div>
   </section>
 
   <section class="cta">
     <div class="container">
-      <h2>Start Shopping Today</h2>
-      <p>Get genuine medicines delivered to your doorstep. First order? Use code WELCOME10 for 10% off!</p>
-      <a href="/store" class="btn-primary">Shop Now</a>
+      <div class="cta-panel">
+        <div class="cta-copy">
+          <h2>Start your order today</h2>
+          <p>Genuine medicines delivered to your doorstep. First order? Use code <code>WELCOME10</code> for 10% off.</p>
+        </div>
+        <div class="cta-actions">
+          <a href="store.html" class="btn-light">Shop now
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </a>
+          <a href="contact.html" class="btn-ghost">Talk to us</a>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -168,38 +218,29 @@
     <div class="container">
       <div class="section-header">
         <div class="tag">Testimonials</div>
-        <h2>What Our Customers Say</h2>
-        <p>Trusted by thousands of happy customers across India</p>
+        <h2>What our customers say</h2>
+        <p>Trusted by thousands of happy customers across Ethiopia.</p>
       </div>
       <div class="testimonial-grid">
         <div class="testimonial-card">
           <p>Aman Pharma has been my go-to for all medicines. The quality is top-notch and delivery is always on time. Highly recommended!</p>
           <div class="testimonial-author">
-            <div class="author-avatar">RS</div>
-            <div class="author-info">
-              <h4>Dr. Rajesh Singh</h4>
-              <span>General Physician, Mumbai</span>
-            </div>
+            <div class="author-avatar">BT</div>
+            <div class="author-info"><h4>Dr. Bekele Tadesse</h4><span>General Physician, Addis Ababa</span></div>
           </div>
         </div>
         <div class="testimonial-card">
-          <p>Best online pharmacy in India! The prices are genuine and the customer support team is very helpful. 5 stars!</p>
+          <p>Best online pharmacy in Ethiopia! The prices are genuine and the customer support team is very helpful. 5 stars!</p>
           <div class="testimonial-author">
-            <div class="author-avatar">AP</div>
-            <div class="author-info">
-              <h4>Anita Patel</h4>
-              <span>Regular Customer, Delhi</span>
-            </div>
+            <div class="author-avatar">HG</div>
+            <div class="author-info"><h4>Hanna Girma</h4><span>Regular customer, Addis Ababa</span></div>
           </div>
         </div>
         <div class="testimonial-card">
           <p>As a hospital administrator, I rely on Aman Pharma for bulk orders. Their service and quality are consistently excellent.</p>
           <div class="testimonial-author">
-            <div class="author-avatar">MK</div>
-            <div class="author-info">
-              <h4>Dr. Manoj Kumar</h4>
-              <span>Hospital Director, Bangalore</span>
-            </div>
+            <div class="author-avatar">YA</div>
+            <div class="author-info"><h4>Dr. Yonas Alemu</h4><span>Hospital Director, Addis Ababa</span></div>
           </div>
         </div>
       </div>
@@ -208,8 +249,8 @@
 
   <section class="newsletter">
     <div class="container">
-      <h3>Subscribe to Our Newsletter</h3>
-      <p>Get health tips, product updates, and exclusive offers delivered to your inbox</p>
+      <h3>Subscribe to our newsletter</h3>
+      <p>Health tips, product updates and exclusive offers — once a month, no noise.</p>
       <form class="newsletter-form" id="newsletterForm">
         <input type="email" placeholder="Enter your email" required>
         <button type="submit">Subscribe</button>
@@ -220,7 +261,7 @@
 
   <section class="partners">
     <div class="container">
-      <h3>Trusted By Leading Healthcare Organizations</h3>
+      <h3>Trusted by leading healthcare organisations</h3>
       <div class="partner-logos">
         <div class="partner-logo">AIIMS</div>
         <div class="partner-logo">MAX Healthcare</div>
@@ -236,50 +277,47 @@
     <div class="container">
       <div class="footer-grid">
         <div class="footer-about">
-          <a href="/" class="logo">
-            <div class="logo-icon"><img src="/images/logo.jpg" alt="Aman Pharma"></div>
-            <div class="logo-text">
-              <h1 style="color:#fff">Aman Pharma</h1>
-              <span>v1.4 HEALTHCARE</span>
-            </div>
+          <a href="index.html" class="logo">
+            <span class="logo-icon"><img src="images/mark.png" alt="Aman Pharma"></span>
+            <span class="brand-text">Aman Pharma<em>v1.4 Healthcare</em></span>
           </a>
-          <p>Your trusted pharmaceutical partner since 2010. Quality medicines, affordable prices, and doorstep delivery across India.</p>
+          <p>Your trusted pharmaceutical partner since 2010. Quality medicines, fair prices and doorstep delivery across Ethiopia.</p>
         </div>
         <div>
-          <h4>Quick Links</h4>
+          <h4>Quick links</h4>
           <ul class="footer-links">
-            <li><a href="/">Home</a></li>
-            <li><a href="/about">About Us</a></li>
-            <li><a href="/products">Products</a></li>
-            <li><a href="/store">Online Store</a></li>
-            <li><a href="/contact">Contact</a></li>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About us</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="store.html">Online store</a></li>
+            <li><a href="contact.html">Contact</a></li>
           </ul>
         </div>
         <div>
           <h4>Categories</h4>
           <ul class="footer-links">
-            <li><a href="/store?category=antibiotics">Antibiotics</a></li>
-            <li><a href="/store?category=pain-relief">Pain Relief</a></li>
-            <li><a href="/store?category=supplements">Supplements</a></li>
-            <li><a href="/store?category=diabetes">Diabetes Care</a></li>
-            <li><a href="/store?category=cardio">Cardiovascular</a></li>
+            <li><a href="store.html?category=antibiotics">Antibiotics</a></li>
+            <li><a href="store.html?category=pain-relief">Pain relief</a></li>
+            <li><a href="store.html?category=supplements">Supplements</a></li>
+            <li><a href="store.html?category=diabetes">Diabetes care</a></li>
+            <li><a href="store.html?category=cardio">Cardiovascular</a></li>
           </ul>
         </div>
         <div class="footer-contact">
-          <h4>Contact Us</h4>
-          <p>📍 123 Pharma Hub, Mumbai 400001</p>
-          <p>📞 +91 98765 43210</p>
-          <p>✉️ info@amanpharma.com</p>
-          <p>🕐 Mon-Sat: 9AM - 9PM</p>
+          <h4>Contact us</h4>
+          <p>Bole Road Pharma Hub, Addis Ababa 1000</p>
+          <p>+251 91 234 5678</p>
+          <p>info@amanpharma.com</p>
+          <p>Mon–Sat: 9 AM – 9 PM</p>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2026 Aman Pharma v1.4. All rights reserved.</p>
         <div class="footer-social">
-          <a href="#">f</a>
-          <a href="#">tw</a>
-          <a href="#">in</a>
-          <a href="#">ig</a>
+          <a href="#" aria-label="Facebook">f</a>
+          <a href="#" aria-label="X">tw</a>
+          <a href="#" aria-label="LinkedIn">in</a>
+          <a href="#" aria-label="Instagram">ig</a>
         </div>
       </div>
     </div>
@@ -287,7 +325,7 @@
 
   <button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
 
-  <script src="/js/app.js"></script>
+  <script src="js/app.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', async () => {
       updateNavAuth();
@@ -306,17 +344,20 @@
             <div class="product-info">
               <h3>${p.name}</h3>
               <p>${p.description}</p>
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-top:10px">
+              <div class="price-row">
                 <div>
-                  <span style="font-size:1.3rem;font-weight:700;color:var(--green)">Rs.${p.price}</span>
-                  <span style="text-decoration:line-through;color:#999;font-size:0.85rem;margin-left:6px">Rs.${p.originalPrice}</span>
+                  <span class="price">Br ${p.price}</span>
+                  <span class="price-old">Br ${p.originalPrice}</span>
                 </div>
-                <a href="/store" class="product-link">Shop →</a>
+                <a href="store.html" class="product-link">Shop →</a>
               </div>
             </div>
           </div>
         `).join('');
-      } catch(e) {}
+      } catch(e) {
+        const grid = document.getElementById('featuredProducts');
+        if (grid && IS_FILE_MODE) grid.innerHTML = apiUnavailableNote();
+      }
     });
 
     document.getElementById('newsletterForm').addEventListener('submit', async (e) => {

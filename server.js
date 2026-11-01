@@ -14,7 +14,7 @@ const store = {
   users: [
     { id: 1, name: 'Wubshet', email: 'wubshet@amanpharma.com', password: hashPassword('admin123'), role: 'admin', joined: '2024-01-01' },
     { id: 2, name: 'Aman', email: 'aman@amanpharma.com', password: hashPassword('user123'), role: 'user', joined: '2024-06-15' },
-    { id: 3, name: 'Priya Patel', email: 'priya@gmail.com', password: hashPassword('user123'), role: 'user', joined: '2025-01-10' }
+    { id: 3, name: 'Selam Tesfaye', email: 'selam@gmail.com', password: hashPassword('user123'), role: 'user', joined: '2025-01-10' }
   ],
   products: [
     { id: 1, name: 'Amoxicillin 500mg', category: 'antibiotics', price: 250, originalPrice: 320, stock: 150, description: 'Broad-spectrum antibiotic for bacterial infections', badge: 'Popular', icon: '💊' },
@@ -32,18 +32,18 @@ const store = {
     { id: 13, name: 'Losartan 50mg', category: 'cardio', price: 190, originalPrice: 240, stock: 140, description: 'Blood pressure management medication', badge: 'Essential', icon: '❤️' },
     { id: 14, name: 'Atorvastatin 10mg', category: 'cardio', price: 220, originalPrice: 280, stock: 130, description: 'Cholesterol management tablet', badge: '', icon: '❤️' },
     { id: 15, name: 'Zinc 50mg', category: 'supplements', price: 180, originalPrice: 230, stock: 250, description: 'Immune system booster', badge: '', icon: '🛡️' },
-    { id: 16, name: 'Dolo 650', category: 'pain-relief', price: 30, originalPrice: 40, stock: 1000, description: 'India\'s trusted paracetamol brand', badge: 'Best Seller', icon: '💊' },
+    { id: 16, name: 'Panadol 650', category: 'pain-relief', price: 30, originalPrice: 40, stock: 1000, description: 'Ethiopia\'s trusted paracetamol brand', badge: 'Best Seller', icon: '💊' },
     { id: 17, name: 'ORS Sachets x20', category: 'cold-flu', price: 60, originalPrice: 80, stock: 500, description: 'Oral rehydration salts for dehydration', badge: '', icon: '🧂' },
     { id: 18, name: 'Insulin Glargine', category: 'diabetes', price: 850, originalPrice: 1100, stock: 50, description: 'Long-acting insulin for diabetes management', badge: 'Premium', icon: '💉' }
   ],
   orders: [
-    { id: 1001, userId: 2, items: [{ productId: 1, qty: 2 }, { productId: 3, qty: 1 }], total: 850, status: 'delivered', date: '2025-12-01', address: '123 Health Street, Mumbai' },
-    { id: 1002, userId: 3, items: [{ productId: 2, qty: 5 }], total: 400, status: 'shipped', date: '2026-01-15', address: '45 Wellness Ave, Delhi' },
-    { id: 1003, userId: 2, items: [{ productId: 7, qty: 1 }, { productId: 15, qty: 2 }], total: 810, status: 'processing', date: '2026-02-10', address: '123 Health Street, Mumbai' }
+    { id: 1001, userId: 2, items: [{ productId: 1, qty: 2 }, { productId: 3, qty: 1 }], total: 850, status: 'delivered', date: '2025-12-01', address: 'Bole Road, Addis Ababa' },
+    { id: 1002, userId: 3, items: [{ productId: 2, qty: 5 }], total: 400, status: 'shipped', date: '2026-01-15', address: 'Kazanchis, Addis Ababa' },
+    { id: 1003, userId: 2, items: [{ productId: 7, qty: 1 }, { productId: 15, qty: 2 }], total: 810, status: 'processing', date: '2026-02-10', address: 'Bole Road, Addis Ababa' }
   ],
   messages: [
-    { id: 1, name: 'Rahul Kumar', email: 'rahul@gmail.com', phone: '9876543210', subject: 'Bulk Order Inquiry', message: 'Looking to place a bulk order for our hospital.', date: '2026-01-20', read: false },
-    { id: 2, name: 'Dr. Mehta', email: 'mehta@clinic.com', phone: '9123456789', subject: 'Partnership', message: 'Interested in becoming a distributor.', date: '2026-02-05', read: true }
+    { id: 1, name: 'Dawit Bekele', email: 'dawit@gmail.com', phone: '0912345678', subject: 'Bulk Order Inquiry', message: 'Looking to place a bulk order for our hospital.', date: '2026-01-20', read: false },
+    { id: 2, name: 'Dr. Kebede', email: 'kebede@clinic.com', phone: '0911567890', subject: 'Partnership', message: 'Interested in becoming a distributor.', date: '2026-02-05', read: true }
   ],
   newsletters: [
     { email: 'sub1@gmail.com', date: '2026-01-01' },
