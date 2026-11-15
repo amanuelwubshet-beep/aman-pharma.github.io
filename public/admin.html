@@ -58,7 +58,33 @@
             <button type="submit" class="btn-primary">Add Product</button>
           </form>
         </div>
-        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Badge</th><th>Actions</th></tr></thead><tbody id="productsTable"></tbody></table></div>
+        <div class="add-product-form">
+          <h3>📦 Add Many Products</h3>
+          <p class="pwd-hint">One product per line, fields separated by <code>|</code> (or commas if there is no <code>|</code>):<br>
+            <code>name | category | price | original price | stock | badge | description</code><br>
+            Leave original price or badge empty if not needed. Categories: antibiotics, pain-relief, supplements, allergy, gastro, diabetes, cardio, cold-flu.</p>
+          <textarea id="bulkText" rows="7" style="width:100%;resize:vertical;font-family:monospace;font-size:0.85rem;margin-top:10px" placeholder="Amoxicillin 250mg | antibiotics | 210 | 250 | 100 | Popular | Broad-spectrum antibiotic"></textarea>
+          <div style="display:flex;gap:12px;margin-top:10px;align-items:center;flex-wrap:wrap">
+            <input type="file" id="bulkFile" accept=".txt,.csv">
+            <button type="button" class="btn-primary" id="bulkAdd">Add all products</button>
+          </div>
+          <div id="bulkResult" style="margin-top:12px;font-size:0.88rem"></div>
+        </div>
+        <div class="add-product-form">
+          <h3>📗 Import Products from Excel</h3>
+          <p class="pwd-hint">Download the template, fill in one product per row, then upload the file (.xlsx). The first sheet is read; the first row must hold the headings: <code>name, category, price, original price, stock, badge, description</code>.</p>
+          <div style="display:flex;gap:12px;margin-top:10px;align-items:center;flex-wrap:wrap">
+            <button type="button" class="action-btn" id="xlsxTemplate">Download template</button>
+            <input type="file" id="xlsxFile" accept=".xlsx">
+            <button type="button" class="btn-primary" id="xlsxImport">Import Excel file</button>
+          </div>
+          <div id="xlsxResult" style="margin-top:12px;font-size:0.88rem"></div>
+        </div>
+        <div class="bulk-bar" style="display:flex;gap:12px;align-items:center;margin-bottom:10px;flex-wrap:wrap">
+          <span id="selCount" style="font-size:0.88rem">0 selected</span>
+          <button type="button" class="action-btn del" id="bulkDelete" disabled>Delete selected</button>
+        </div>
+        <div class="admin-table-wrap"><table class="admin-table"><thead><tr><th style="width:40px"><input type="checkbox" id="selAll" aria-label="Select all products"></th><th>Name</th><th>Category</th><th>Price</th><th>Stock</th><th>Badge</th><th>Actions</th></tr></thead><tbody id="productsTable"></tbody></table></div>
       </div>
 
       <div class="admin-section" id="section-orders">
@@ -116,10 +142,145 @@
       const { orders } = await ordersRes.json();
       document.getElementById('recentOrdersTable').innerHTML = orders.slice(-5).reverse().map(o => `<tr><td>#${o.id}</td><td>Br ${o.total}</td><td><span class="badge ${o.status==='delivered'?'green':o.status==='shipped'?'gold':'brown'}">${o.status}</span></td><td>${o.date}</td></tr>`).join('');
     }
+    // Escape anything typed by a person before it goes into HTML.
+    const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+
+    // Excel: download the template, then upload a filled-in .xlsx file.
+    document.getElementById('xlsxTemplate').addEventListener('click', async () => {
+      const res = await fetch('/api/admin/products/template', { headers: authHeaders() });
+      if (!res.ok) { alert('Could not download the template.'); return; }
+      const url = URL.createObjectURL(await res.blob());
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'aman-pharma-products-template.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('xlsxImport').addEventListener('click', async () => {
+      const out = document.getElementById('xlsxResult');
+      const file = document.getElementById('xlsxFile').files[0];
+      if (!file) { out.textContent = 'Choose an .xlsx file first.'; return; }
+      if (file.size > 4 * 1024 * 1024) { out.textContent = 'That file is larger than 4 MB. Split it into smaller files.'; return; }
+      out.textContent = 'Importing…';
+
+      // Read the file as base64 so it can be sent as JSON.
+      const base64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(String(reader.result).split(',')[1] || '');
+        reader.onerror = () => reject(reader.error);
+        reader.readAsDataURL(file);
+      });
+
+      const res = await fetch('/api/admin/products/import-xlsx', { method: 'POST', headers: { ...authHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify({ file: base64 }) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { out.innerHTML = `<span style="color:#b42318">${esc(data.error || 'The import failed.')}</span>`; return; }
+
+      let html = `<strong>${data.created} product${data.created === 1 ? '' : 's'} imported from ${esc(file.name)}.</strong>`;
+      if (data.errors.length) {
+        html += `<div style="color:#b42318;margin-top:6px">${data.errors.length} row${data.errors.length === 1 ? '' : 's'} not imported. Fix these rows in the spreadsheet and import again:</div>` +
+          '<ul style="margin:6px 0 0 18px">' + data.errors.map(er => `<li>Row ${er.row}${er.name ? ` (${esc(er.name)})` : ''}: ${esc(er.problems.join(', '))}</li>`).join('') + '</ul>';
+      }
+      out.innerHTML = html;
+      document.getElementById('xlsxFile').value = '';
+      loadProductsTable(); loadDashboard();
+    });
+    const selected = new Set();
+
     async function loadProductsTable() {
       const { products } = await (await fetch('/api/products')).json();
-      document.getElementById('productsTable').innerHTML = products.map(p => `<tr><td>${p.name}</td><td>${p.category}</td><td>Br ${p.price}</td><td>${p.stock}</td><td>${p.badge || '-'}</td><td><button class="action-btn del" onclick="deleteProduct(${p.id})">Delete</button></td></tr>`).join('');
+      // Drop selections for products that no longer exist.
+      const ids = new Set(products.map(p => p.id));
+      for (const id of [...selected]) if (!ids.has(id)) selected.delete(id);
+      document.getElementById('productsTable').innerHTML = products.map(p => `<tr><td><input type="checkbox" class="rowSel" value="${p.id}" ${selected.has(p.id) ? 'checked' : ''} aria-label="Select ${esc(p.name)}"></td><td>${esc(p.name)}</td><td>${esc(p.category)}</td><td>Br ${esc(p.price)}</td><td>${esc(p.stock)}</td><td>${esc(p.badge || '-')}</td><td><button class="action-btn del" onclick="deleteProduct(${p.id})">Delete</button></td></tr>`).join('');
+      updateSelection();
     }
+
+    function updateSelection() {
+      const boxes = [...document.querySelectorAll('.rowSel')];
+      document.getElementById('selCount').textContent = `${selected.size} selected`;
+      document.getElementById('bulkDelete').disabled = selected.size === 0;
+      const all = document.getElementById('selAll');
+      all.checked = boxes.length > 0 && boxes.every(b => b.checked);
+      all.indeterminate = selected.size > 0 && !all.checked;
+    }
+
+    document.getElementById('productsTable').addEventListener('change', e => {
+      if (!e.target.classList.contains('rowSel')) return;
+      const id = Number(e.target.value);
+      if (e.target.checked) selected.add(id); else selected.delete(id);
+      updateSelection();
+    });
+
+    document.getElementById('selAll').addEventListener('change', e => {
+      document.querySelectorAll('.rowSel').forEach(b => {
+        b.checked = e.target.checked;
+        const id = Number(b.value);
+        if (e.target.checked) selected.add(id); else selected.delete(id);
+      });
+      updateSelection();
+    });
+
+    document.getElementById('bulkDelete').addEventListener('click', async () => {
+      const ids = [...selected];
+      if (ids.length === 0) return;
+      if (!confirm(`Delete ${ids.length} selected product${ids.length === 1 ? '' : 's'}? This cannot be undone.`)) return;
+      const res = await fetch('/api/admin/products/bulk-delete', { method: 'POST', headers: { ...authHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify({ ids }) });
+      if (!res.ok) { alert('Could not delete the selected products.'); return; }
+      selected.clear();
+      loadProductsTable(); loadDashboard();
+    });
+
+    // One product per line. Uses "|" if the line has one, otherwise commas.
+    // Everything after the 6th field is the description, so it may contain the separator.
+    function parseBulk(text) {
+      return text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).map((line, i) => {
+        const d = line.includes('|') ? '|' : ',';
+        const f = line.split(d).map(s => s.trim());
+        const [name, category, price, originalPrice, stock, badge] = f;
+        return {
+          row: i + 1,
+          name: name || '',
+          category: category || '',
+          price: price === undefined || price === '' ? '' : Number(price),
+          originalPrice: originalPrice ? Number(originalPrice) : '',
+          stock: stock === undefined || stock === '' ? '' : Number(stock),
+          badge: badge || '',
+          description: f.slice(6).join(d).trim(),
+        };
+      });
+    }
+
+    document.getElementById('bulkFile').addEventListener('change', async e => {
+      const file = e.target.files[0];
+      if (file) document.getElementById('bulkText').value = await file.text();
+    });
+
+    document.getElementById('bulkAdd').addEventListener('click', async () => {
+      const text = document.getElementById('bulkText').value;
+      const out = document.getElementById('bulkResult');
+      if (!text.trim()) { out.textContent = 'Paste or load a list first.'; return; }
+      const products = parseBulk(text);
+      out.textContent = 'Adding…';
+      const res = await fetch('/api/admin/products/bulk', { method: 'POST', headers: { ...authHeaders(), 'Content-Type': 'application/json' }, body: JSON.stringify({ products }) });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) { out.innerHTML = `<span style="color:#b42318">${esc(data.error || 'Could not add the products.')}</span>`; return; }
+
+      let html = `<strong>${data.created} product${data.created === 1 ? '' : 's'} added.</strong>`;
+      if (data.errors.length) {
+        html += `<div style="color:#b42318;margin-top:6px">${data.errors.length} row${data.errors.length === 1 ? '' : 's'} not added. Fix them and add again:</div><ul style="margin:6px 0 0 18px">` +
+          data.errors.map(er => `<li>Row ${er.row}${er.name ? ` (${esc(er.name)})` : ''}: ${esc(er.problems.join(', '))}</li>`).join('') + '</ul>';
+        // Keep only the rows that failed, so they can be corrected and added again.
+        const failedRows = new Set(data.errors.map(er => er.row));
+        document.getElementById('bulkText').value = text.split(/\r?\n/).map(l => l.trim()).filter(Boolean).filter((_, i) => failedRows.has(i + 1)).join('\n');
+      } else {
+        document.getElementById('bulkText').value = '';
+      }
+      out.innerHTML = html;
+      loadProductsTable(); loadDashboard();
+    });
     async function deleteProduct(id) { if (!confirm('Delete product?')) return; await fetch('/api/admin/products/' + id, { method: 'DELETE', headers: authHeaders() }); loadProductsTable(); loadDashboard(); }
     document.getElementById('productForm').addEventListener('submit', async e => {
       e.preventDefault();

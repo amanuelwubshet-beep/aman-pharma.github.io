@@ -1,11 +1,13 @@
 const express = require('express');
 const path = require('path');
 const crypto = require('crypto');
+const XLSX = require('xlsx');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+// Excel files are sent as base64 inside JSON, so allow a larger body than the default.
+app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -244,6 +246,146 @@ app.post('/api/admin/products', authMiddleware, adminMiddleware, (req, res) => {
   };
   store.products.push(product);
   res.json({ product });
+});
+
+const PRODUCT_CATEGORIES = new Set(['antibiotics', 'pain-relief', 'supplements', 'allergy', 'gastro', 'diabetes', 'cardio', 'cold-flu']);
+const MAX_BULK = 500;
+
+/**
+ * Check each product row on its own and save the valid ones.
+ * `rowNumbers[i]` is the row number shown to the user for items[i]
+ * (the spreadsheet row for Excel, or the position for pasted lists).
+ */
+function addProductRows(items, rowNumbers) {
+  let nextId = Math.max(0, ...store.products.map(p => p.id)) + 1;
+  const created = [];
+  const errors = [];
+
+  items.forEach((raw, i) => {
+    const row = rowNumbers[i];
+    const name = String(raw?.name ?? '').trim();
+    const category = String(raw?.category ?? '').trim();
+    const price = Number(raw?.price);
+    const stock = Number(raw?.stock);
+    const hasOriginal = raw?.originalPrice !== undefined && raw?.originalPrice !== null && raw?.originalPrice !== '';
+    const originalPrice = hasOriginal ? Number(raw.originalPrice) : price;
+
+    const problems = [];
+    if (!name) problems.push('name is required');
+    if (!PRODUCT_CATEGORIES.has(category)) problems.push(`unknown category "${category}"`);
+    if (raw?.price === undefined || raw?.price === '' || !Number.isFinite(price) || price < 0) problems.push('price must be a number, 0 or more');
+    if (raw?.stock === undefined || raw?.stock === '' || !Number.isInteger(stock) || stock < 0) problems.push('stock must be a whole number, 0 or more');
+    if (hasOriginal && (!Number.isFinite(originalPrice) || originalPrice < 0)) problems.push('original price must be a number, 0 or more');
+
+    if (problems.length) {
+      errors.push({ row, name, problems });
+      return;
+    }
+    created.push({
+      id: nextId++,
+      name,
+      category,
+      price,
+      originalPrice,
+      stock,
+      description: String(raw.description ?? '').trim(),
+      badge: String(raw.badge ?? '').trim(),
+      icon: String(raw.icon ?? '').trim() || '💊',
+    });
+  });
+
+  store.products.push(...created);
+  return { created: created.length, errors };
+}
+
+// Bulk add (pasted or typed list). Body: { products: [{ name, category, price, originalPrice?, stock, description?, badge?, icon? }, ...] }
+app.post('/api/admin/products/bulk', authMiddleware, adminMiddleware, (req, res) => {
+  const items = Array.isArray(req.body?.products) ? req.body.products : null;
+  if (!items) return res.status(400).json({ error: 'Send { "products": [ ... ] }' });
+  if (items.length === 0) return res.status(400).json({ error: 'No products to add' });
+  if (items.length > MAX_BULK) return res.status(400).json({ error: `Add at most ${MAX_BULK} products at a time` });
+  res.json(addProductRows(items, items.map((_, i) => i + 1)));
+});
+
+// Column headings are matched loosely: "Original Price", "original_price" and "originalprice" all work.
+function normalizeExcelRow(row) {
+  const pick = (...keys) => {
+    for (const header of Object.keys(row)) {
+      const k = header.toLowerCase().replace(/[\s_-]/g, '');
+      if (keys.includes(k)) return row[header];
+    }
+    return undefined;
+  };
+  return {
+    name: pick('name', 'productname'),
+    category: pick('category'),
+    price: pick('price'),
+    originalPrice: pick('originalprice'),
+    stock: pick('stock', 'quantity'),
+    badge: pick('badge'),
+    description: pick('description'),
+    icon: pick('icon'),
+  };
+}
+
+// Excel import. Body: { file: "<base64 of an .xlsx file>" }. The first sheet's first row holds the headings.
+app.post('/api/admin/products/import-xlsx', authMiddleware, adminMiddleware, (req, res) => {
+  const b64 = req.body?.file;
+  if (typeof b64 !== 'string' || b64.length === 0) return res.status(400).json({ error: 'No Excel file was received.' });
+
+  let rows;
+  try {
+    const workbook = XLSX.read(Buffer.from(b64, 'base64'), { type: 'buffer' });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    if (!sheet) return res.status(400).json({ error: 'The workbook has no sheets.' });
+    rows = XLSX.utils.sheet_to_json(sheet, { defval: '', raw: true });
+  } catch {
+    return res.status(400).json({ error: 'That file could not be read. Save it as .xlsx and try again.' });
+  }
+
+  // Skip blank lines, but keep each row's spreadsheet number (row 1 is the heading row).
+  const filled = rows
+    .map((row, i) => ({ row, number: i + 2 }))
+    .filter(({ row }) => Object.values(row).some(v => String(v).trim() !== ''));
+
+  if (filled.length === 0) return res.status(400).json({ error: 'The first sheet has no product rows under the headings.' });
+  if (filled.length > MAX_BULK) return res.status(400).json({ error: `Import at most ${MAX_BULK} products at a time` });
+
+  res.json(addProductRows(
+    filled.map(({ row }) => normalizeExcelRow(row)),
+    filled.map(({ number }) => number),
+  ));
+});
+
+// Blank template to fill in, with a sheet listing the allowed categories.
+app.get('/api/admin/products/template', authMiddleware, adminMiddleware, (req, res) => {
+  const headings = ['name', 'category', 'price', 'original price', 'stock', 'badge', 'description'];
+  const example = ['Amoxicillin 250mg', 'antibiotics', 210, 250, 100, 'Popular', 'Broad-spectrum antibiotic'];
+
+  const products = XLSX.utils.aoa_to_sheet([headings, example]);
+  products['!cols'] = headings.map(h => ({ wch: Math.max(14, h.length + 4) }));
+
+  const categories = XLSX.utils.aoa_to_sheet([['category'], ...[...PRODUCT_CATEGORIES].map(c => [c])]);
+  categories['!cols'] = [{ wch: 16 }];
+
+  const workbook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(workbook, products, 'Products');
+  XLSX.utils.book_append_sheet(workbook, categories, 'Categories');
+  const buffer = XLSX.write(workbook, { type: 'buffer', bookType: 'xlsx' });
+
+  res.setHeader('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+  res.setHeader('Content-Disposition', 'attachment; filename="aman-pharma-products-template.xlsx"');
+  res.send(buffer);
+});
+
+// Bulk delete. Body: { ids: [1, 2, 3] }
+app.post('/api/admin/products/bulk-delete', authMiddleware, adminMiddleware, (req, res) => {
+  const ids = Array.isArray(req.body?.ids) ? req.body.ids.map(Number) : null;
+  if (!ids) return res.status(400).json({ error: 'Send { "ids": [ ... ] }' });
+  const drop = new Set(ids);
+  const before = store.products.length;
+  store.products = store.products.filter(p => !drop.has(p.id));
+  res.json({ deleted: before - store.products.length });
 });
 
 app.put('/api/admin/products/:id', authMiddleware, adminMiddleware, (req, res) => {
